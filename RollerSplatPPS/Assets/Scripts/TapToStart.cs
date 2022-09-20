@@ -1,18 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TapToStart : MonoBehaviour
 {
-    public GameObject tapToStartText;
     public ScriptableBool gameStarts;
-    void Update()
+    public ScriptableBool isBallMoving;
+    public void StartTheGame()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            // Game starts
-            tapToStartText.gameObject.SetActive(false);
-            gameStarts.isTrue = true;
-        }
+        // Game starts
+        gameStarts.isTrue = true;
+        isBallMoving.isTrue = false;
     }
 }
