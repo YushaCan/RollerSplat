@@ -13,16 +13,27 @@ public class BallMovement : MonoBehaviour
     Vector2 tapPos = new Vector2();
     Vector2 swipePos = new Vector2();
     float deltaX, deltaY;
+
+    Rigidbody ballRb;
+    private void Start()
+    {
+        ballRb = GetComponent<Rigidbody>();
+    }
     void Update()
     {
         // If game is Active
         if (gameStarts.isTrue)
         {
-            MoveBall();
+            //MoveBall();
         }
     }
     void MoveBall()
     {
+        if (isBallMoving.isTrue && (ballRb.velocity.x == 0 && ballRb.velocity.z == 0))
+        {
+            ballRb.velocity = new Vector3(0, 0, 0);
+            isBallMoving.isTrue = false;
+        }
         if (isBallMoving.isTrue == false && isFirstStart == true)
         {
             if (Input.GetMouseButtonDown(0))
@@ -38,7 +49,7 @@ public class BallMovement : MonoBehaviour
             }
         }
         isFirstStart = true;
-        // UNDER CONSTRUCTION
+
         if (isBallMoving.isTrue == true)
         {
             // Ball Direction Check
@@ -48,12 +59,12 @@ public class BallMovement : MonoBehaviour
                 if (deltaX < -1)
                 {
                     // Left Movement
-                    transform.Translate(Vector3.left * Time.deltaTime * ballSpeed.value);
+                    ballRb.velocity = new Vector3(-ballSpeed.value, 0, 0);
                 }
                 else if (deltaX > 1)
                 {
                     // Right Movement
-                    transform.Translate(Vector3.right * Time.deltaTime * ballSpeed.value);
+                    ballRb.velocity = new Vector3(ballSpeed.value, 0, 0);
                 }
             }
             else if (Mathf.Abs(deltaX) < Mathf.Abs(deltaY))
@@ -62,17 +73,15 @@ public class BallMovement : MonoBehaviour
                 if (deltaY < -1)
                 {
                     // Down Movement
-                    transform.Translate(Vector3.back * Time.deltaTime * ballSpeed.value);
+                    ballRb.velocity = new Vector3(0, 0, -ballSpeed.value);
                 }
                 else if (deltaY > 1)
                 {
                     // Up Movement
-                    transform.Translate(Vector3.forward * Time.deltaTime * ballSpeed.value);
+                    ballRb.velocity = new Vector3(0, 0, ballSpeed.value);
                 }
             }
-            /////////////////////////
         }
-
     }
 }
 

@@ -10,7 +10,7 @@ public class StopBall : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            isBallMoving.isTrue = false;
+            isBallMoving.isTrue = false;          
         }
     }
 }
