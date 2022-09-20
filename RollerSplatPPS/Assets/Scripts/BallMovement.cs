@@ -6,6 +6,7 @@ public class BallMovement : MonoBehaviour
 {
     public ScriptableBool gameStarts;
     public ScriptableInt ballSpeed;
+    public ScriptableBool isBallMoving;
 
     Vector2 tapPos = new Vector2();
     Vector2 swipePos = new Vector2();
@@ -13,7 +14,7 @@ public class BallMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        isBallMoving.isTrue = false;       
     }
 
     // Update is called once per frame
@@ -37,8 +38,42 @@ public class BallMovement : MonoBehaviour
             swipePos = Input.mousePosition;
             deltaX = swipePos.x - tapPos.x;
             deltaY = swipePos.y - tapPos.y;
+            isBallMoving.isTrue = true;
             // Ball Direction Check
-            // UNDER CONSTRUCTION
+            /*/ UNDER CONSTRUCTION
+            if (Mathf.Abs(deltaX) > Mathf.Abs(deltaY))
+            {
+                // Ball moves horizontally
+                if (deltaX < -1)
+                {
+                    // Left Movement
+                    transform.Translate(Vector3.left * Time.deltaTime * ballSpeed.value);
+                }
+                else if (deltaX > 1)
+                {
+                    // Right Movement
+                    transform.Translate(Vector3.right * Time.deltaTime * ballSpeed.value);
+                }
+            }
+            else if (Mathf.Abs(deltaX) < Mathf.Abs(deltaY))
+            {
+                // Ball moves vertically
+                if (deltaY < -1)
+                {
+                    // Down Movement
+                    transform.Translate(Vector3.back * Time.deltaTime * ballSpeed.value);
+                }
+                else if (deltaY > 1)
+                {
+                    // Up Movement
+                    transform.Translate(Vector3.forward * Time.deltaTime * ballSpeed.value);
+                }
+            }
+            */////////////////////////
+        }
+        // UNDER CONSTRUCTION
+        if (isBallMoving.isTrue == true)
+        {
             if (Mathf.Abs(deltaX) > Mathf.Abs(deltaY))
             {
                 // Ball moves horizontally
@@ -69,5 +104,6 @@ public class BallMovement : MonoBehaviour
             }
             /////////////////////////
         }
+
     }
 }
