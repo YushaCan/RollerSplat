@@ -32,10 +32,16 @@ public class BallMovement : MonoBehaviour
     private void OnEnable()
     {
         MoveTheBall += MoveBall;
+        StopBall.BallCollides += ArrangeConstraints;
     }
     private void OnDisable()
     {
         MoveTheBall -= MoveBall;
+        StopBall.BallCollides -= ArrangeConstraints;
+    }
+    void ArrangeConstraints()
+    {
+        ballRb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
     }
     void MoveBall()
     {
@@ -47,11 +53,13 @@ public class BallMovement : MonoBehaviour
             {
                 // Left Movement
                 ballRb.velocity = new Vector3(-ballSpeed.value, 0, 0);
+                ballRb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
             }
             else if (deltaX > 1)
             {
                 // Right Movement
                 ballRb.velocity = new Vector3(ballSpeed.value, 0, 0);
+                ballRb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
             }
         }
         else if (Mathf.Abs(deltaX) < Mathf.Abs(deltaY))
@@ -61,11 +69,13 @@ public class BallMovement : MonoBehaviour
             {
                 // Down Movement
                 ballRb.velocity = new Vector3(0, 0, -ballSpeed.value);
+                ballRb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
             }
             else if (deltaY > 1)
             {
                 // Up Movement
                 ballRb.velocity = new Vector3(0, 0, ballSpeed.value);
+                ballRb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
             }
         }
     }
