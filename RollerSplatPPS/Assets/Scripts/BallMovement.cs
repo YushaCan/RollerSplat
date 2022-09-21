@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,7 @@ public class BallMovement : MonoBehaviour
     float deltaX, deltaY;
 
     Rigidbody ballRb;
+    Action MoveTheBall;
     private void Start()
     {
         ballRb = GetComponent<Rigidbody>();
@@ -24,10 +26,50 @@ public class BallMovement : MonoBehaviour
         // If game is Active
         if (gameStarts.isTrue)
         {
-            //MoveBall();
+            TouchControl();
         }
     }
+    private void OnEnable()
+    {
+        MoveTheBall += MoveBall;
+    }
+    private void OnDisable()
+    {
+        MoveTheBall -= MoveBall;
+    }
     void MoveBall()
+    {
+        isBallMoving.isTrue = true;
+        if (Mathf.Abs(deltaX) > Mathf.Abs(deltaY))
+        {
+            // Ball moves horizontally
+            if (deltaX < -1)
+            {
+                // Left Movement
+                ballRb.velocity = new Vector3(-ballSpeed.value, 0, 0);
+            }
+            else if (deltaX > 1)
+            {
+                // Right Movement
+                ballRb.velocity = new Vector3(ballSpeed.value, 0, 0);
+            }
+        }
+        else if (Mathf.Abs(deltaX) < Mathf.Abs(deltaY))
+        {
+            // Ball moves vertically
+            if (deltaY < -1)
+            {
+                // Down Movement
+                ballRb.velocity = new Vector3(0, 0, -ballSpeed.value);
+            }
+            else if (deltaY > 1)
+            {
+                // Up Movement
+                ballRb.velocity = new Vector3(0, 0, ballSpeed.value);
+            }
+        }
+    }
+    void TouchControl()
     {
         if (isBallMoving.isTrue && (ballRb.velocity.x == 0 && ballRb.velocity.z == 0))
         {
@@ -45,43 +87,10 @@ public class BallMovement : MonoBehaviour
                 swipePos = Input.mousePosition;
                 deltaX = swipePos.x - tapPos.x;
                 deltaY = swipePos.y - tapPos.y;
-                isBallMoving.isTrue = true;
+                MoveTheBall?.Invoke();
             }
         }
         isFirstStart = true;
-
-        if (isBallMoving.isTrue == true)
-        {
-            // Ball Direction Check
-            if (Mathf.Abs(deltaX) > Mathf.Abs(deltaY))
-            {
-                // Ball moves horizontally
-                if (deltaX < -1)
-                {
-                    // Left Movement
-                    ballRb.velocity = new Vector3(-ballSpeed.value, 0, 0);
-                }
-                else if (deltaX > 1)
-                {
-                    // Right Movement
-                    ballRb.velocity = new Vector3(ballSpeed.value, 0, 0);
-                }
-            }
-            else if (Mathf.Abs(deltaX) < Mathf.Abs(deltaY))
-            {
-                // Ball moves vertically
-                if (deltaY < -1)
-                {
-                    // Down Movement
-                    ballRb.velocity = new Vector3(0, 0, -ballSpeed.value);
-                }
-                else if (deltaY > 1)
-                {
-                    // Up Movement
-                    ballRb.velocity = new Vector3(0, 0, ballSpeed.value);
-                }
-            }
-        }
     }
 }
 
