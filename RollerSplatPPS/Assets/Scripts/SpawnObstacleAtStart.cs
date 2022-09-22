@@ -11,7 +11,9 @@ public class SpawnObstacleAtStart : MonoBehaviour
         for (int i = 0; i < obstacleSpawnPoints.Length; i++)
         {
             obstacleSpawnPoints[i].y = 1;
-            Instantiate(obstacle, obstacleSpawnPoints[i], Quaternion.identity);
+            GameObject go = Instantiate(obstacle, obstacleSpawnPoints[i], Quaternion.identity);
+            go.transform.parent = GameObject.Find("Obstacles").transform;
+            go.transform.name = "Grid Space (X: " + obstacleSpawnPoints[i].x.ToString() + " , Z: " + obstacleSpawnPoints[i].z.ToString() + ")";
         }
         for (int x = 0; x < 10; x++)
         {
