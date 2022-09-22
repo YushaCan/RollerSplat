@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameGrid : MonoBehaviour
 {
-
+    public ScriptableInt TotalGridCount;
     int height = 10;
     int width = 10;
     float gridSpaceSize = 1;
@@ -15,6 +15,7 @@ public class GameGrid : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        TotalGridCount.value = 0;
         CreateGrid();
     }
     // Creates the grid when game starts
@@ -37,6 +38,7 @@ public class GameGrid : MonoBehaviour
                 gameGrid[x, z].GetComponent<GridCell>().SetPosition(x, z);
                 gameGrid[x, z].transform.parent = transform;
                 gameGrid[x, z].gameObject.name = "Grid Space (X: " + x.ToString() + " , Z: " + z.ToString() + ")";
+                TotalGridCount.value++;
             }
         }
     }
