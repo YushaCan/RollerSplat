@@ -40,6 +40,5 @@ public class GameManager : MonoBehaviour
         gameState.gameActive = false;
         isGameStarts.isTrue = false;
         gameState.win = true;
-        Debug.Log("Game State: " + gameState.win);
     }
 }
