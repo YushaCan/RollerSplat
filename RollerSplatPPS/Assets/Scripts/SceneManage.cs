@@ -17,6 +17,6 @@ public class SceneManage : MonoBehaviour
     void ChangeScene()
     {
         SceneManager.LoadScene("GameScene");
-        SceneManager.LoadScene("Level0" + currentLevel.value, LoadSceneMode.Additive);
+        SceneManager.LoadScene("Level" + currentLevel.value, LoadSceneMode.Additive);
     }
 }
