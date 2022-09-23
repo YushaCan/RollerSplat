@@ -5,7 +5,7 @@ using TMPro;
 
 public class LevelSuccessUI : MonoBehaviour
 {
-    public GameObject LevelSuccessPanel;
+    public GameObject LevelSuccessPanel, retryImage;
     public ParticleSystem confettiLeftTop, confettiLeftBot, confettiRightTop, confettiRightBot;
 
     private void OnEnable()
@@ -24,5 +24,6 @@ public class LevelSuccessUI : MonoBehaviour
         confettiLeftBot.Play();
         confettiRightTop.Play();
         confettiRightBot.Play();
+        retryImage.gameObject.SetActive(false);
     }
 }

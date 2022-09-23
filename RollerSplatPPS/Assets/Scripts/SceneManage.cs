@@ -19,4 +19,9 @@ public class SceneManage : MonoBehaviour
         SceneManager.LoadScene("GameScene");
         SceneManager.LoadScene("Level" + currentLevel.value, LoadSceneMode.Additive);
     }
+    public void RetryLevel()
+    {
+        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("Level" + currentLevel.value, LoadSceneMode.Additive);
+    }
 }
