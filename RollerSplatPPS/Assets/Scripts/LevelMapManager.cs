@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class LevelMapManager : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class LevelMapManager : MonoBehaviour
             GameObject go = Instantiate(levelCircle);
             go.transform.SetParent(parentGO.transform);
             go.name = "Level" + i;
+            go.GetComponentInChildren<TextMeshProUGUI>().text = i.ToString();
         }
     }
 }
