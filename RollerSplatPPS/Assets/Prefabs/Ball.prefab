@@ -275,6 +275,10 @@ MonoBehaviour:
   - {fileID: 2100000, guid: b073baa0103b1204ab1ba18d7de559a2, type: 2}
   - {fileID: 2100000, guid: a64cb04ab1fa4a14b832d497135edf4a, type: 2}
   - {fileID: 2100000, guid: b50d5d4dfe91f4b43b536140d1a9b314, type: 2}
+  red: {fileID: 11400000, guid: bb82afe8659768443b0cc43a8f74c0dd, type: 2}
+  green: {fileID: 11400000, guid: b1ea0412e638c12419bbc51de31c013a, type: 2}
+  blue: {fileID: 11400000, guid: 8193ab28894afba4cb74b6e7bed23c3f, type: 2}
+  purple: {fileID: 11400000, guid: ac2548e1bd017394986b3f6e622693e4, type: 2}
 --- !u!54 &2024256597
 Rigidbody:
   m_ObjectHideFlags: 0
