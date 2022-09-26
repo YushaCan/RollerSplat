@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class BallMovement : MonoBehaviour
 {
@@ -20,8 +21,15 @@ public class BallMovement : MonoBehaviour
 
     Rigidbody ballRb;
     Action MoveTheBall;
+
+    Animator ballAnimator;
+    private void Awake()
+    {
+       ballAnimator = gameObject.GetComponent<Animator>();
+    }
     private void Start()
     {
+        ballAnimator.enabled = false;
         ballRb = GetComponent<Rigidbody>();
         left = false;
         right = false;
@@ -38,13 +46,30 @@ public class BallMovement : MonoBehaviour
     }
     private void OnEnable()
     {
+        LevelSuccess.LvlSuccess += AnimateBall;
         MoveTheBall += MoveBall;
         StopBall.BallCollides += ArrangeConstraintsAndPos;
     }
     private void OnDisable()
     {
+        LevelSuccess.LvlSuccess -= AnimateBall;
         MoveTheBall -= MoveBall;
         StopBall.BallCollides -= ArrangeConstraintsAndPos;
+    }
+    IEnumerator AnimateNumerator()
+    {
+        ballAnimator.enabled = true;
+        transform.DOMoveY(3f, .2f);
+        yield return new WaitForSeconds(.2f);
+        transform.DOMoveY(1f, .2f);
+        yield return new WaitForSeconds(.2f);
+        transform.DOMoveY(2f, .2f);
+        yield return new WaitForSeconds(.2f);
+        transform.DOMoveY(1f, .2f);
+    }
+    void AnimateBall()
+    {
+        StartCoroutine(AnimateNumerator());
     }
     void ArrangeConstraintsAndPos()
     {
