@@ -21,9 +21,8 @@ public class LevelSuccess : MonoBehaviour
         // Level Success
         if (occupiedGrids.value == totalGridCount.value)
         {
-            LvlSuccess?.Invoke();
             // NEXT LEVEL
-            Debug.Log("LEVEL SUCCESS");
+            LvlSuccess?.Invoke();
         }
     }
 }

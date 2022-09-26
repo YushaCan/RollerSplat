@@ -9,7 +9,7 @@ public class LevelMapManager : MonoBehaviour
     public GameObject levelCircle;
     public ScriptableInt curLevel, totalLevel;
     public GameObject parentGO;
-    private void Awake()
+    private void Start()
     {
         for (int i = 1; i <= totalLevel.value; i++)
         {

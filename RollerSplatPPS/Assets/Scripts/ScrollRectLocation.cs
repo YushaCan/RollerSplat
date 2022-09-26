@@ -22,7 +22,7 @@ public class ScrollRectLocation : MonoBehaviour
         }
         else
         {
-        scrollRect.verticalNormalizedPosition = divide;
+            scrollRect.verticalNormalizedPosition = divide;
         }
     }
 }
