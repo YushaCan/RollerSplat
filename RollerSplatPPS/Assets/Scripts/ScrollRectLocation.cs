@@ -15,7 +15,6 @@ public class ScrollRectLocation : MonoBehaviour
     void CalculateRectPos(float currentLevel, float totalLevel)
     {
         float divide = currentLevel / totalLevel;
-        Debug.Log("Divide => " + divide);
         if (divide <= .1f)
         {
             scrollRect.verticalNormalizedPosition = 0f;
