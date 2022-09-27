@@ -680,6 +680,7 @@ MonoBehaviour:
   gameStarts: {fileID: 11400000, guid: beb2614c30c3bb1458f2980d1a8da7ea, type: 2}
   isBallMoving: {fileID: 11400000, guid: 2a13b3f49617f0848a8028613e4637c9, type: 2}
   ballSpeed: {fileID: 11400000, guid: 56c66ca56423041489dadff7d51f94bf, type: 2}
+  gridsPos: {fileID: 11400000, guid: f093ff36110d00040b847c39a77de359, type: 2}
   isFirstStart: 0
 --- !u!114 &-4075157610076588714
 MonoBehaviour:

@@ -7,6 +7,7 @@ public class StopBall : MonoBehaviour
 {
     public ScriptableBool isBallMoving;
     public static Action BallCollides;
+    public ScriptableVector3 gridPos;
 
     private void OnEnable()
     {
@@ -24,6 +25,7 @@ public class StopBall : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            gridPos.value = transform.position;
             BallCollides?.Invoke();
             isBallMoving.isTrue = false;
         }

@@ -9,11 +9,12 @@ public class BallMovement : MonoBehaviour
     public ScriptableBool gameStarts;
     public ScriptableBool isBallMoving;
     public ScriptableInt ballSpeed;
+    public ScriptableVector3 gridsPos;
 
     public bool isFirstStart = false;
 
     bool left, right, up, down;
-    float translateAmount = 0.2f;
+    float translateAmount = 1f;
 
     Vector2 tapPos = new Vector2();
     Vector2 swipePos = new Vector2();
@@ -35,6 +36,7 @@ public class BallMovement : MonoBehaviour
         right = false;
         up = false;
         down = false;
+        gridsPos.value = new Vector3(0, 0, 0);
     }
     void Update()
     {
@@ -73,10 +75,11 @@ public class BallMovement : MonoBehaviour
     }
     void ArrangeConstraintsAndPos()
     {
-        //ballRb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
+        ballRb.velocity = new Vector3(0, 0, 0);
         if (left)
         {
-            transform.Translate(translateAmount, 0, 0);
+            //transform.Translate(translateAmount, 0, 0);
+            transform.position = new Vector3(gridsPos.value.x + translateAmount, gridsPos.value.y, gridsPos.value.z);
             left = false;
             right = false;
             up = false;
@@ -84,7 +87,8 @@ public class BallMovement : MonoBehaviour
         }
         else if (right)
         {
-            transform.Translate(-translateAmount, 0, 0);
+            //transform.Translate(-translateAmount, 0, 0);
+            transform.position = new Vector3(gridsPos.value.x - translateAmount, gridsPos.value.y, gridsPos.value.z);
             left = false;
             right = false;
             up = false;
@@ -92,7 +96,8 @@ public class BallMovement : MonoBehaviour
         }
         else if (up)
         {
-            transform.Translate(0, 0, -translateAmount);
+            //transform.Translate(0, 0, -translateAmount);
+            transform.position = new Vector3(gridsPos.value.x, gridsPos.value.y, gridsPos.value.z - translateAmount);
             left = false;
             right = false;
             up = false;
@@ -100,13 +105,13 @@ public class BallMovement : MonoBehaviour
         }
         else if (down)
         {
-            transform.Translate(0, 0, translateAmount);
+            //transform.Translate(0, 0, translateAmount);
+            transform.position = new Vector3(gridsPos.value.x, gridsPos.value.y, gridsPos.value.z + translateAmount);
             left = false;
             right = false;
             up = false;
             down = false;
         }
-        ballRb.velocity = new Vector3(0, 0, 0);     
     }
     void MoveBall()
     {

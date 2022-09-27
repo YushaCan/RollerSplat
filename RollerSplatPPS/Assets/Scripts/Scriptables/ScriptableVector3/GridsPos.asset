@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b95a823dba1ed7f44866124f22b0f9d8, type: 3}
-  m_Name: BallSpeed
+  m_Script: {fileID: 11500000, guid: 28785b7d65c3e6d488b8d3cd143e7a62, type: 3}
+  m_Name: GridsPos
   m_EditorClassIdentifier: 
-  value: 20
+  value: {x: 0, y: 0, z: 0}
