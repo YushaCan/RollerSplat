@@ -78,7 +78,6 @@ public class BallMovement : MonoBehaviour
         ballRb.velocity = new Vector3(0, 0, 0);
         if (left)
         {
-            //transform.Translate(translateAmount, 0, 0);
             transform.position = new Vector3(gridsPos.value.x + translateAmount, gridsPos.value.y, gridsPos.value.z);
             left = false;
             right = false;
@@ -87,7 +86,6 @@ public class BallMovement : MonoBehaviour
         }
         else if (right)
         {
-            //transform.Translate(-translateAmount, 0, 0);
             transform.position = new Vector3(gridsPos.value.x - translateAmount, gridsPos.value.y, gridsPos.value.z);
             left = false;
             right = false;
@@ -96,7 +94,6 @@ public class BallMovement : MonoBehaviour
         }
         else if (up)
         {
-            //transform.Translate(0, 0, -translateAmount);
             transform.position = new Vector3(gridsPos.value.x, gridsPos.value.y, gridsPos.value.z - translateAmount);
             left = false;
             right = false;
@@ -105,7 +102,6 @@ public class BallMovement : MonoBehaviour
         }
         else if (down)
         {
-            //transform.Translate(0, 0, translateAmount);
             transform.position = new Vector3(gridsPos.value.x, gridsPos.value.y, gridsPos.value.z + translateAmount);
             left = false;
             right = false;
@@ -124,14 +120,12 @@ public class BallMovement : MonoBehaviour
                 // Left Movement
                 ballRb.velocity = new Vector3(-ballSpeed.value, 0, 0);
                 left = true;
-                //ballRb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
             }
             else if (deltaX > 1)
             {
                 // Right Movement
                 ballRb.velocity = new Vector3(ballSpeed.value, 0, 0);
                 right = true;
-                //ballRb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
             }
         }
         else if (Mathf.Abs(deltaX) < Mathf.Abs(deltaY))
@@ -142,14 +136,12 @@ public class BallMovement : MonoBehaviour
                 // Down Movement
                 ballRb.velocity = new Vector3(0, 0, -ballSpeed.value);
                 down = true;
-                //ballRb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
             }
             else if (deltaY > 1)
             {
                 // Up Movement
                 ballRb.velocity = new Vector3(0, 0, ballSpeed.value);
                 up = true;
-                //ballRb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
             }
         }
     }
