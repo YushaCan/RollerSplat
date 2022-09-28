@@ -8,7 +8,8 @@ public class GenerateLevelOnMap : MonoBehaviour
 {
     public GameObject levelCircle, parentGO;
     public ScriptableInt curLevel, totalLevel;
-    int createdLevelCount = 5; 
+    int createdLevelCount = 5;
+    public static Action GenerateLevels;
     public void GenerateLvlOnMap()
     {
         for (int i = totalLevel.value + 1; i <= totalLevel.value + createdLevelCount; i++)
@@ -23,5 +24,6 @@ public class GenerateLevelOnMap : MonoBehaviour
             }
             // Action here for create the map and save it to the build settings
         }
+            GenerateLevels?.Invoke();
     }
 }
