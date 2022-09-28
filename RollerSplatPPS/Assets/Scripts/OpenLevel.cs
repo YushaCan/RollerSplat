@@ -8,6 +8,7 @@ public class OpenLevel : MonoBehaviour
 {
     public ScriptableInt currentLevel;
     public GameObject levelText;
+    int handmadeLevelLimit = 5;
     string lvltext;
     int level;
     private void Start()
@@ -18,7 +19,15 @@ public class OpenLevel : MonoBehaviour
     public void OpenLvl()
     {
         currentLevel.value = level;
-        SceneManager.LoadScene("GameScene");
-        SceneManager.LoadScene("Level" + level, LoadSceneMode.Additive);
+        if (currentLevel.value > handmadeLevelLimit)
+        {
+            SceneManager.LoadScene("GameScene");
+            SceneManager.LoadScene("ProceduralLevel", LoadSceneMode.Additive);
+        }
+        else
+        {
+            SceneManager.LoadScene("GameScene");
+            SceneManager.LoadScene("Level" + level, LoadSceneMode.Additive);
+        }
     }
 }
