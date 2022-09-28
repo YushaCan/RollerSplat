@@ -17,7 +17,7 @@ public class ScrollRectLocation : MonoBehaviour
         float divide = currentLevel / totalLevel;
         if (divide <= .1f)
         {
-            scrollRect.verticalNormalizedPosition = 0f;
+            scrollRect.verticalNormalizedPosition = 0f; 
         }
         else
         {
