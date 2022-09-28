@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class SceneManage : MonoBehaviour
 {
     public ScriptableInt currentLevel;
+    int handmadeLevelLimit = 5;
     private void OnEnable()
     {
         LevelManager.ChangeScene += ChangeScene;
@@ -16,12 +17,28 @@ public class SceneManage : MonoBehaviour
     }
     void ChangeScene()
     {
-        SceneManager.LoadScene("GameScene");
-        SceneManager.LoadScene("Level" + currentLevel.value, LoadSceneMode.Additive);
+        if (currentLevel.value > handmadeLevelLimit)
+        {
+            SceneManager.LoadScene("GameScene");
+            SceneManager.LoadScene("ProceduralLevel", LoadSceneMode.Additive);
+        }
+        else
+        {
+            SceneManager.LoadScene("GameScene");
+            SceneManager.LoadScene("Level" + currentLevel.value, LoadSceneMode.Additive);
+        }
     }
     public void RetryLevel()
     {
-        SceneManager.LoadScene("GameScene");
-        SceneManager.LoadScene("Level" + currentLevel.value, LoadSceneMode.Additive);
+        if (currentLevel.value > handmadeLevelLimit)
+        {
+            SceneManager.LoadScene("GameScene");
+            SceneManager.LoadScene("ProceduralLevel", LoadSceneMode.Additive);
+        }
+        else
+        {
+            SceneManager.LoadScene("GameScene");
+            SceneManager.LoadScene("Level" + currentLevel.value, LoadSceneMode.Additive);
+        }
     }
 }
