@@ -15,12 +15,16 @@ public class GenerateProceduralLevel : MonoBehaviour
     // For choosing the path direction
     int pathDirection;
     int tempValue;
+    int constructingCount;
+    int deletedCount;
     /////////////////
-    int iterationCount = 100;
+    public int iterationCount = 5;
     int step = 1;
     Vector3 randomBallSpawnPoint;
     void Start()
     {
+        constructingCount = 0;
+        deletedCount = 0;
         pathDirection = UnityEngine.Random.Range(0, 3);
         vector3List.vector3.Clear();
         SpawnBallRandomly();
@@ -34,33 +38,29 @@ public class GenerateProceduralLevel : MonoBehaviour
     }
     void LevelGenerateAlgorithm()
     {
+        constructingCount = 0;
+        deletedCount = 0;
         Debug.Log("Random path direction => " + pathDirection);
         // TO LEFT
         /////////////////////////////////////////////////////////// IN CONSTRUCTION ///////////////////////////////////////////////////////////////
         if (pathDirection == 0)
         {
-            tempValue = UnityEngine.Random.Range(0, 1);
-            if (tempValue == 0)
-            {
-                pathDirection = 2;
-            }
-            else
-            {
-                pathDirection = 3;
-            }
-            //
             randomGridCountToMove = UnityEngine.Random.Range(minRandom, maxRandom);
-            Debug.Log(randomGridCountToMove);
+            Debug.Log("Random grid count to move: " + randomGridCountToMove);
             int totalPathGrids = vector3List.vector3.Count;
             for (int i = totalPathGrids; i < totalPathGrids + randomGridCountToMove; i++)
             {
-                if (vector3List.vector3[i - step] == null || vector3List.vector3[i - step].x <= 1)
+                if (vector3List.vector3[i - step] == null || vector3List.vector3[i - step].x < 1)
                 {
+                    deletedCount++;
+                    Debug.Log("Deleted grid");
                     vector3List.vector3.RemoveAt(i - 1);
                     break;
                 }
                 else
                 {
+                    constructingCount++;
+                    Debug.Log("CONSTRUCTING");
                     Vector3 vector3 = vector3List.vector3[i - step];
                     vector3List.vector3.Add(new Vector3(vector3.x - step, vector3.y, vector3.z));
                 }
@@ -70,29 +70,22 @@ public class GenerateProceduralLevel : MonoBehaviour
         // TO RIGHT
         if (pathDirection == 1)
         {
-            //
-            tempValue = UnityEngine.Random.Range(0, 1);
-            if (tempValue == 0)
-            {
-                pathDirection = 2;
-            }
-            else
-            {
-                pathDirection = 3;
-            }
-            //
             randomGridCountToMove = UnityEngine.Random.Range(minRandom, maxRandom);
-            Debug.Log(randomGridCountToMove);
+            Debug.Log("Random grid count to move: " + randomGridCountToMove);
             int totalPathGrids = vector3List.vector3.Count;
             for (int i = totalPathGrids; i < totalPathGrids + randomGridCountToMove; i++)
             {
-                if (vector3List.vector3[i - step] == null || vector3List.vector3[i - step].x >= 8)
+                if (vector3List.vector3[i - step] == null || vector3List.vector3[i - step].x > 8)
                 {
+                    deletedCount++;
+                    Debug.Log("Deleted grid");
                     vector3List.vector3.RemoveAt(i - 1);
                     break;
                 }
                 else
                 {
+                    constructingCount++;
+                    Debug.Log("CONSTRUCTING");
                     Vector3 vector3 = vector3List.vector3[i - step];
                     vector3List.vector3.Add(new Vector3(vector3.x + step, vector3.y, vector3.z));
                 }
@@ -102,28 +95,22 @@ public class GenerateProceduralLevel : MonoBehaviour
         // TO UP
         else if (pathDirection == 2)
         {
-            tempValue = UnityEngine.Random.Range(0, 1);
-            if (tempValue == 0)
-            {
-                pathDirection = 0;
-            }
-            else
-            {
-                pathDirection = 1;
-            }
-            //
             randomGridCountToMove = UnityEngine.Random.Range(minRandom, maxRandom);
-            Debug.Log(randomGridCountToMove);
+            Debug.Log("Random grid count to move: " + randomGridCountToMove);
             int totalPathGrids = vector3List.vector3.Count;
             for (int i = totalPathGrids; i < totalPathGrids + randomGridCountToMove; i++)
             {
-                if (vector3List.vector3[i - step] == null || vector3List.vector3[i - step].z >= 8)
+                if (vector3List.vector3[i - step] == null || vector3List.vector3[i - step].z > 8)
                 {
+                    deletedCount++;
+                    Debug.Log("Deleted grid");
                     vector3List.vector3.RemoveAt(i - 1);
                     break;
                 }
                 else
                 {
+                    constructingCount++;
+                    Debug.Log("CONSTRUCTING");
                     Vector3 vector3 = vector3List.vector3[i - step];
                     vector3List.vector3.Add(new Vector3(vector3.x, vector3.y, vector3.z + step));
                 }
@@ -132,31 +119,61 @@ public class GenerateProceduralLevel : MonoBehaviour
         // TO DOWN
         else if (pathDirection == 3)
         {
-            tempValue = UnityEngine.Random.Range(0, 1);
-            if (tempValue == 0)
-            {
-                pathDirection = 0;
-            }
-            else
-            {
-                pathDirection = 1;
-            }
-            //
             randomGridCountToMove = UnityEngine.Random.Range(minRandom, maxRandom);
-            Debug.Log(randomGridCountToMove);
+            Debug.Log("Random grid count to move: " + randomGridCountToMove);
             int totalPathGrids = vector3List.vector3.Count;
             for (int i = totalPathGrids; i < totalPathGrids + randomGridCountToMove; i++)
             {
-                if (vector3List.vector3[i - step] == null || vector3List.vector3[i - step].z <= 1)
+                if (vector3List.vector3[i - step] == null || vector3List.vector3[i - step].z < 1)
                 {
+                    deletedCount++;
+                    Debug.Log("Deleted grid");
                     vector3List.vector3.RemoveAt(i - 1);
                     break;
                 }
                 else
                 {
+                    constructingCount++;
+                    Debug.Log("CONSTRUCTING");
                     Vector3 vector3 = vector3List.vector3[i - step];
                     vector3List.vector3.Add(new Vector3(vector3.x, vector3.y, vector3.z - step));
                 }
+            }
+        }
+        tempValue = UnityEngine.Random.Range(0, 1);
+        Debug.Log("Temp Value: " + tempValue);
+        ////// INSTRUCTION CONTINUE ///////
+        if ((constructingCount - deletedCount) == 0)
+        {
+            Debug.Log("PRODUCTION STOPPPEEEEED");
+        }
+        ////////////////////////////////////
+        // When previous move was rigt or left
+        if (pathDirection == 0 || pathDirection == 1)
+        {
+            if (tempValue == 0)
+            {
+                Debug.Log("To Up");
+                pathDirection = 2;
+            }
+            else
+            {
+                Debug.Log("To Down");
+                pathDirection = 3;
+            }
+        }
+        // When previous move was up or down
+        else if (pathDirection == 2 || pathDirection == 3)
+        {
+            if (tempValue == 0)
+            {
+                Debug.Log("To left");
+                pathDirection = 0;
+            }
+            else
+            {
+                Debug.Log("To Right");
+                pathDirection = 1;
             }
         }
     }
