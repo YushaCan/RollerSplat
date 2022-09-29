@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,160 +14,176 @@ public class GenerateProceduralLevel : MonoBehaviour
     ////////////////// 
     // For choosing the path direction
     int pathDirection;
-    int previousPathDirection;
+    int tempValue;
     /////////////////
-    int iterationCount = 10;
+    int iterationCount = 100;
     int step = 1;
     Vector3 randomBallSpawnPoint;
     void Start()
     {
+        pathDirection = UnityEngine.Random.Range(0, 3);
         vector3List.vector3.Clear();
-        previousPathDirection = -1;
-        // Iteration Count
         SpawnBallRandomly();
+        // Iteration Count
         for (int i = 0; i < iterationCount; i++)
         {
             Debug.Log("Iteration " + (i + 1));
             LevelGenerateAlgorithm();
         }
+        SpawnObstacles();
     }
     void LevelGenerateAlgorithm()
     {
-        pathDirection = Random.Range(0, 3);
         Debug.Log("Random path direction => " + pathDirection);
-        //pathDirection = 0;
         // TO LEFT
         /////////////////////////////////////////////////////////// IN CONSTRUCTION ///////////////////////////////////////////////////////////////
-        if (pathDirection == 0 && previousPathDirection != pathDirection)
+        if (pathDirection == 0)
         {
-            previousPathDirection = pathDirection;
-            randomGridCountToMove = Random.Range(minRandom, maxRandom);
+            tempValue = UnityEngine.Random.Range(0, 1);
+            if (tempValue == 0)
+            {
+                pathDirection = 2;
+            }
+            else
+            {
+                pathDirection = 3;
+            }
+            //
+            randomGridCountToMove = UnityEngine.Random.Range(minRandom, maxRandom);
             Debug.Log(randomGridCountToMove);
             int totalPathGrids = vector3List.vector3.Count;
             for (int i = totalPathGrids; i < totalPathGrids + randomGridCountToMove; i++)
             {
                 if (vector3List.vector3[i - step] == null || vector3List.vector3[i - step].x <= 1)
                 {
+                    vector3List.vector3.RemoveAt(i - 1);
                     break;
                 }
                 else
                 {
                     Vector3 vector3 = vector3List.vector3[i - step];
                     vector3List.vector3.Add(new Vector3(vector3.x - step, vector3.y, vector3.z));
-                    // Destroy the grid for create the path
-                    GameObject go = GameObject.Find("Grid Space (X: " + vector3List.vector3[i].x.ToString() + " , Z: " + vector3List.vector3[i].z.ToString() + ")");
-                    Destroy(go);
-                    
-                    /*
-                    GameObject go = Instantiate(obstacle, vector3List.vector3[i], Quaternion.identity);
-                    go.transform.parent = GameObject.Find("Obstacles").transform;
-                    go.transform.name = "Grid Space (X: " + vector3List.vector3[i].x.ToString() + " , Z: " + vector3List.vector3[i].z.ToString() + ")";
-                    */
                 }
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // TO RIGHT
-        if (pathDirection == 1 && previousPathDirection != pathDirection)
+        if (pathDirection == 1)
         {
-            previousPathDirection = pathDirection;
-            randomGridCountToMove = Random.Range(minRandom, maxRandom);
+            //
+            tempValue = UnityEngine.Random.Range(0, 1);
+            if (tempValue == 0)
+            {
+                pathDirection = 2;
+            }
+            else
+            {
+                pathDirection = 3;
+            }
+            //
+            randomGridCountToMove = UnityEngine.Random.Range(minRandom, maxRandom);
             Debug.Log(randomGridCountToMove);
             int totalPathGrids = vector3List.vector3.Count;
             for (int i = totalPathGrids; i < totalPathGrids + randomGridCountToMove; i++)
             {
                 if (vector3List.vector3[i - step] == null || vector3List.vector3[i - step].x >= 8)
                 {
+                    vector3List.vector3.RemoveAt(i - 1);
                     break;
                 }
                 else
                 {
                     Vector3 vector3 = vector3List.vector3[i - step];
                     vector3List.vector3.Add(new Vector3(vector3.x + step, vector3.y, vector3.z));
-                    // Destroy the grid for create the path
-                    GameObject go = GameObject.Find("Grid Space (X: " + vector3List.vector3[i].x.ToString() + " , Z: " + vector3List.vector3[i].z.ToString() + ")");
-                    Destroy(go);
-                    /*
-                    GameObject go = Instantiate(obstacle, vector3List.vector3[i], Quaternion.identity);
-                    go.transform.parent = GameObject.Find("Obstacles").transform;
-                    go.transform.name = "Grid Space (X: " + vector3List.vector3[i].x.ToString() + " , Z: " + vector3List.vector3[i].z.ToString() + ")";
-                    */
                 }
             }
+
         }
         // TO UP
-        else if (pathDirection == 2 && previousPathDirection != pathDirection)
+        else if (pathDirection == 2)
         {
-            previousPathDirection = pathDirection;
-            randomGridCountToMove = Random.Range(minRandom, maxRandom);
+            tempValue = UnityEngine.Random.Range(0, 1);
+            if (tempValue == 0)
+            {
+                pathDirection = 0;
+            }
+            else
+            {
+                pathDirection = 1;
+            }
+            //
+            randomGridCountToMove = UnityEngine.Random.Range(minRandom, maxRandom);
             Debug.Log(randomGridCountToMove);
             int totalPathGrids = vector3List.vector3.Count;
             for (int i = totalPathGrids; i < totalPathGrids + randomGridCountToMove; i++)
             {
                 if (vector3List.vector3[i - step] == null || vector3List.vector3[i - step].z >= 8)
                 {
+                    vector3List.vector3.RemoveAt(i - 1);
                     break;
                 }
                 else
                 {
                     Vector3 vector3 = vector3List.vector3[i - step];
                     vector3List.vector3.Add(new Vector3(vector3.x, vector3.y, vector3.z + step));
-                    // Destroy the grid for create the path
-                    GameObject go = GameObject.Find("Grid Space (X: " + vector3List.vector3[i].x.ToString() + " , Z: " + vector3List.vector3[i].z.ToString() + ")");
-                    Destroy(go);
-                    /*
-                    GameObject go = Instantiate(obstacle, vector3List.vector3[i], Quaternion.identity);
-                    go.transform.parent = GameObject.Find("Obstacles").transform;
-                    go.transform.name = "Grid Space (X: " + vector3List.vector3[i].x.ToString() + " , Z: " + vector3List.vector3[i].z.ToString() + ")";
-                    */
                 }
             }
         }
         // TO DOWN
-        else if (pathDirection == 3 && previousPathDirection != pathDirection)
+        else if (pathDirection == 3)
         {
-            previousPathDirection = pathDirection;
-            randomGridCountToMove = Random.Range(minRandom, maxRandom);
+            tempValue = UnityEngine.Random.Range(0, 1);
+            if (tempValue == 0)
+            {
+                pathDirection = 0;
+            }
+            else
+            {
+                pathDirection = 1;
+            }
+            //
+            randomGridCountToMove = UnityEngine.Random.Range(minRandom, maxRandom);
             Debug.Log(randomGridCountToMove);
             int totalPathGrids = vector3List.vector3.Count;
             for (int i = totalPathGrids; i < totalPathGrids + randomGridCountToMove; i++)
             {
                 if (vector3List.vector3[i - step] == null || vector3List.vector3[i - step].z <= 1)
                 {
+                    vector3List.vector3.RemoveAt(i - 1);
                     break;
                 }
                 else
                 {
                     Vector3 vector3 = vector3List.vector3[i - step];
                     vector3List.vector3.Add(new Vector3(vector3.x, vector3.y, vector3.z - step));
-                    // Destroy the grid for create the path
-                    GameObject go = GameObject.Find("Grid Space (X: " + vector3List.vector3[i].x.ToString() + " , Z: " + vector3List.vector3[i].z.ToString() + ")");
-                    Destroy(go);
-                    /*
-                    GameObject go = Instantiate(obstacle, vector3List.vector3[i], Quaternion.identity);
-                    go.transform.parent = GameObject.Find("Obstacles").transform;
-                    go.transform.name = "Grid Space (X: " + vector3List.vector3[i].x.ToString() + " , Z: " + vector3List.vector3[i].z.ToString() + ")";
-                    */
                 }
             }
-        }
-        // For randomize the direction value again
-        else
-        {
-            Debug.Log("Previous and current directions are the same: p: " + previousPathDirection + " c: " + pathDirection);
-            pathDirection = Random.Range(0, 3);
         }
     }
     void SpawnBallRandomly()
     {
-        int x = Random.Range(minRandom, maxRandom);
+        int x = UnityEngine.Random.Range(minRandom, maxRandom);
         int y = 1;
-        int z = Random.Range(minRandom, maxRandom);
+        int z = UnityEngine.Random.Range(minRandom, maxRandom);
         // Ball Spawn point
         randomBallSpawnPoint = new Vector3(x, y, z);
         vector3List.vector3.Add(new Vector3(x, y, z));
-        GameObject obstacle = GameObject.Find("Grid Space (X: " + randomBallSpawnPoint.x.ToString() + " , Z: " + randomBallSpawnPoint.z.ToString() + ")");
-        Destroy(obstacle);
         Instantiate(ball, randomBallSpawnPoint, Quaternion.identity);
+    }
+    void SpawnObstacles()
+    {
+        for (int x = 1; x <= 8; x++)
+        {
+            for (int z = 1; z <= 8; z++)
+            {
+                if (vector3List.vector3.Contains(new Vector3(x, 1, z)))
+                {
+                    continue;
+                }
+                GameObject go = Instantiate(obstacle, new Vector3(x, 1, z), Quaternion.identity);
+                go.transform.parent = GameObject.Find("Obstacles").transform;
+                go.transform.name = "Grid Space (X: " + x.ToString() + " , Z: " + z.ToString() + ")";
+            }
+        }
     }
 }
