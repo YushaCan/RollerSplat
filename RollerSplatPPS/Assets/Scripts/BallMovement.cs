@@ -10,6 +10,7 @@ public class BallMovement : MonoBehaviour
     public ScriptableBool isBallMoving;
     public ScriptableInt ballSpeed;
     public ScriptableVector3 gridsPos;
+    public ScriptableVector3List ballSpawnPoint;
 
     public bool isFirstStart = false;
 
