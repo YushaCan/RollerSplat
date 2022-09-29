@@ -315,10 +315,74 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2135114651}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0bad9e2ebd4498746bdc3f52c7664a69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   obstacle: {fileID: 1584116108228199345, guid: 970a71b1319ada04f839cedafd2fc84e, type: 3}
-  obstacleSpawnPoints: []
+  obstacleSpawnPoints:
+  - {x: 1, y: 1, z: 1}
+  - {x: 1, y: 1, z: 2}
+  - {x: 1, y: 1, z: 3}
+  - {x: 1, y: 1, z: 4}
+  - {x: 1, y: 1, z: 5}
+  - {x: 1, y: 1, z: 6}
+  - {x: 1, y: 1, z: 7}
+  - {x: 1, y: 1, z: 8}
+  - {x: 2, y: 1, z: 1}
+  - {x: 2, y: 1, z: 2}
+  - {x: 2, y: 1, z: 3}
+  - {x: 2, y: 1, z: 4}
+  - {x: 2, y: 1, z: 5}
+  - {x: 2, y: 1, z: 6}
+  - {x: 2, y: 1, z: 7}
+  - {x: 2, y: 1, z: 8}
+  - {x: 3, y: 1, z: 1}
+  - {x: 3, y: 1, z: 2}
+  - {x: 3, y: 1, z: 3}
+  - {x: 3, y: 1, z: 4}
+  - {x: 3, y: 1, z: 5}
+  - {x: 3, y: 1, z: 6}
+  - {x: 3, y: 1, z: 7}
+  - {x: 3, y: 1, z: 8}
+  - {x: 4, y: 1, z: 1}
+  - {x: 4, y: 1, z: 2}
+  - {x: 4, y: 1, z: 3}
+  - {x: 4, y: 1, z: 4}
+  - {x: 4, y: 1, z: 5}
+  - {x: 4, y: 1, z: 6}
+  - {x: 4, y: 1, z: 7}
+  - {x: 4, y: 1, z: 8}
+  - {x: 5, y: 1, z: 1}
+  - {x: 5, y: 1, z: 2}
+  - {x: 5, y: 1, z: 3}
+  - {x: 5, y: 1, z: 4}
+  - {x: 5, y: 1, z: 5}
+  - {x: 5, y: 1, z: 6}
+  - {x: 5, y: 1, z: 7}
+  - {x: 5, y: 1, z: 8}
+  - {x: 6, y: 1, z: 1}
+  - {x: 6, y: 1, z: 2}
+  - {x: 6, y: 1, z: 3}
+  - {x: 6, y: 1, z: 4}
+  - {x: 6, y: 1, z: 5}
+  - {x: 6, y: 1, z: 6}
+  - {x: 6, y: 1, z: 7}
+  - {x: 6, y: 1, z: 8}
+  - {x: 7, y: 1, z: 1}
+  - {x: 7, y: 1, z: 2}
+  - {x: 7, y: 1, z: 3}
+  - {x: 7, y: 1, z: 4}
+  - {x: 7, y: 1, z: 5}
+  - {x: 7, y: 1, z: 6}
+  - {x: 7, y: 1, z: 7}
+  - {x: 7, y: 1, z: 8}
+  - {x: 8, y: 1, z: 1}
+  - {x: 8, y: 1, z: 2}
+  - {x: 8, y: 1, z: 3}
+  - {x: 8, y: 1, z: 4}
+  - {x: 8, y: 1, z: 5}
+  - {x: 8, y: 1, z: 6}
+  - {x: 8, y: 1, z: 7}
+  - {x: 8, y: 1, z: 8}
