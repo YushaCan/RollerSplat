@@ -6,7 +6,7 @@ public class SpawnObstacleAtStart : MonoBehaviour
 {
     public GameObject obstacle;
     public Vector3[] obstacleSpawnPoints;
-    void Start()
+    void Awake()
     {
         for (int i = 0; i < obstacleSpawnPoints.Length; i++)
         {
