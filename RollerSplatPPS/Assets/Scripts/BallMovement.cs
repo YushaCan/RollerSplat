@@ -72,6 +72,7 @@ public class BallMovement : MonoBehaviour
     }
     void AnimateBall()
     {
+        ballRb.detectCollisions = false;
         StartCoroutine(AnimateNumerator());
     }
     void ArrangeConstraintsAndPos()
