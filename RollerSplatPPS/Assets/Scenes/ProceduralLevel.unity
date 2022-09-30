@@ -308,7 +308,7 @@ MonoBehaviour:
   obstacle: {fileID: 1584116108228199345, guid: 970a71b1319ada04f839cedafd2fc84e, type: 3}
   ball: {fileID: 7810667042129046211, guid: df19910b28b79474d815104cbef17791, type: 3}
   vector3List: {fileID: 11400000, guid: dee2e40985035b74ba5e8a2b0878ee84, type: 2}
-  iterationCount: 4
+  iterationCount: 8
 --- !u!114 &2135114655
 MonoBehaviour:
   m_ObjectHideFlags: 0
