@@ -7,6 +7,7 @@ public class GenerateProceduralLevel : MonoBehaviour
 {
     public GameObject obstacle, ball;
     public ScriptableVector3List vector3List;
+    public ScriptableVector3List cannotDestroy;
     // Number of random steps of the path that can move forward
     int randomGridCountToMove;
     int minRandom = 1;
@@ -17,14 +18,12 @@ public class GenerateProceduralLevel : MonoBehaviour
     int tempValue;
     bool randomDirection;
     bool canGoLeft, canGoRight, canGoUp, canGoDown;
-    bool isPreviousDirectionSame;
     /////////////////
     public int iterationCount = 5;
     int step = 1;
     Vector3 randomBallSpawnPoint;
     void Start()
     {
-        isPreviousDirectionSame = false;
         canGoLeft = true;
         canGoRight = true;
         canGoUp = true;
@@ -53,42 +52,39 @@ public class GenerateProceduralLevel : MonoBehaviour
             randomGridCountToMove = UnityEngine.Random.Range(minRandom, maxRandom);
             Debug.Log("Random grid count to move: " + randomGridCountToMove);
             int totalPathGrids = vector3List.vector3.Count;
-            for (int i = totalPathGrids; i < totalPathGrids + randomGridCountToMove; i++)
+            for (int i = totalPathGrids; i <= totalPathGrids + randomGridCountToMove; i++)
             {
-                Vector3 vector3 = vector3List.vector3[i - step];
-                Debug.Log("VECTOR: " + vector3);
-                if (vector3.x == 1)
+                if (i == totalPathGrids + randomGridCountToMove)
                 {
-                    canGoLeft = false;
-                    if (vector3.z == 1)
-                    {
-                        canGoDown = false;
-                    }
-                    else if (vector3.z == 8)
-                    {
-                        canGoUp = false;
-                    }
+                    Vector3 vector3 = vector3List.vector3[i - step];
+                    cannotDestroy.vector3.Add(new Vector3(vector3.x - step, vector3.y, vector3.z));
                     break;
                 }
                 else
                 {
-                    Debug.Log("CONSTRUCTING");
-                    //Vector3 vector3 = vector3List.vector3[i - step];
-                    vector3List.vector3.Add(new Vector3(vector3.x - step, vector3.y, vector3.z));
-                    canGoRight = true;
+                    Vector3 vector3 = vector3List.vector3[i - step];
+                    Debug.Log("VECTOR: " + vector3);
+                    bool undestroyable = cannotDestroy.vector3.Contains(vector3);
+                    if (vector3.x == 1 || undestroyable)
+                    {
+                        canGoLeft = false;
+                        if (vector3.z == 1)
+                        {
+                            canGoDown = false;
+                        }
+                        else if (vector3.z == 8)
+                        {
+                            canGoUp = false;
+                        }
+                        break;
+                    }
+                    else
+                    {
+                        //Vector3 vector3 = vector3List.vector3[i - step];
+                        vector3List.vector3.Add(new Vector3(vector3.x - step, vector3.y, vector3.z));
+                        canGoRight = true;
+                    }
                 }
-                /*if (vector3 == null || vector3.x < 1)
-                {
-                    Debug.Log("Deleted grid");
-                    vector3List.vector3.RemoveAt(i - 1);
-                    break;
-                }
-                else
-                {
-                    Debug.Log("CONSTRUCTING");
-                    //Vector3 vector3 = vector3List.vector3[i - step];
-                    vector3List.vector3.Add(new Vector3(vector3.x - step, vector3.y, vector3.z));                  
-                }*/
             }
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -98,45 +94,40 @@ public class GenerateProceduralLevel : MonoBehaviour
             randomGridCountToMove = UnityEngine.Random.Range(minRandom, maxRandom);
             Debug.Log("Random grid count to move: " + randomGridCountToMove);
             int totalPathGrids = vector3List.vector3.Count;
-            for (int i = totalPathGrids; i < totalPathGrids + randomGridCountToMove; i++)
+            for (int i = totalPathGrids; i <= totalPathGrids + randomGridCountToMove; i++)
             {
-
-                Vector3 vector3 = vector3List.vector3[i - step];
-                Debug.Log("VECTOR: " + vector3);
-                if (vector3.x == 8)
+                if (i == totalPathGrids + randomGridCountToMove)
                 {
-                    canGoRight = false;
-                    if (vector3.z == 1)
-                    {
-                        canGoDown = false;
-                    }
-                    else if (vector3.z == 8)
-                    {
-                        canGoUp = false;
-                    }
-                    break;
-                }
-                else
-                {
-                    Debug.Log("CONSTRUCTING");
-                    //Vector3 vector3 = vector3List.vector3[i - step];
-                    vector3List.vector3.Add(new Vector3(vector3.x + step, vector3.y, vector3.z));
-                    canGoLeft = true;
-                }
-                /*if (vector3List.vector3[i - step] == null || vector3List.vector3[i - step].x > 8)
-                {
-                    Debug.Log("Deleted grid");
-                    vector3List.vector3.RemoveAt(i - 1);
-                    break;
-                }
-                else
-                {
-                    Debug.Log("CONSTRUCTING");
                     Vector3 vector3 = vector3List.vector3[i - step];
-                    vector3List.vector3.Add(new Vector3(vector3.x + step, vector3.y, vector3.z));
-                }*/
+                    cannotDestroy.vector3.Add(new Vector3(vector3.x + step, vector3.y, vector3.z));
+                    break;
+                }
+                else
+                {
+                    Vector3 vector3 = vector3List.vector3[i - step];
+                    Debug.Log("VECTOR: " + vector3);
+                    bool undestroyable = cannotDestroy.vector3.Contains(vector3);
+                    if (vector3.x == 8 || undestroyable)
+                    {
+                        canGoRight = false;
+                        if (vector3.z == 1)
+                        {
+                            canGoDown = false;
+                        }
+                        else if (vector3.z == 8)
+                        {
+                            canGoUp = false;
+                        }
+                        break;
+                    }
+                    else
+                    {
+                        //Vector3 vector3 = vector3List.vector3[i - step];
+                        vector3List.vector3.Add(new Vector3(vector3.x + step, vector3.y, vector3.z));
+                        canGoLeft = true;
+                    }
+                }
             }
-
         }
         // TO UP
         else if (pathDirection == 2 && canGoUp)
@@ -144,44 +135,39 @@ public class GenerateProceduralLevel : MonoBehaviour
             randomGridCountToMove = UnityEngine.Random.Range(minRandom, maxRandom);
             Debug.Log("Random grid count to move: " + randomGridCountToMove);
             int totalPathGrids = vector3List.vector3.Count;
-            for (int i = totalPathGrids; i < totalPathGrids + randomGridCountToMove; i++)
+            for (int i = totalPathGrids; i <= totalPathGrids + randomGridCountToMove; i++)
             {
-
-                Vector3 vector3 = vector3List.vector3[i - step];
-                Debug.Log("VECTOR: " + vector3);
-                if (vector3.z == 8)
+                if (i == totalPathGrids + randomGridCountToMove)
                 {
-                    canGoUp = false;
-                    if (vector3.x == 1)
-                    {
-                        canGoLeft = false;
-                    }
-                    else if (vector3.x == 8)
-                    {
-                        canGoRight = false;
-                    }
-                    break;
-                }
-                else
-                {
-                    Debug.Log("CONSTRUCTING");
-                    //Vector3 vector3 = vector3List.vector3[i - step];
-                    vector3List.vector3.Add(new Vector3(vector3.x, vector3.y, vector3.z + step));
-                    canGoDown = true;
-                }
-                /*
-                if (vector3List.vector3[i - step] == null || vector3List.vector3[i - step].z > 8)
-                {
-                    Debug.Log("Deleted grid");
-                    vector3List.vector3.RemoveAt(i - 1);
-                    break;
-                }
-                else
-                {
-                    Debug.Log("CONSTRUCTING");
                     Vector3 vector3 = vector3List.vector3[i - step];
-                    vector3List.vector3.Add(new Vector3(vector3.x, vector3.y, vector3.z + step));
-                }*/
+                    cannotDestroy.vector3.Add(new Vector3(vector3.x, vector3.y, vector3.z + step));
+                    break;
+                }
+                else
+                {
+                    Vector3 vector3 = vector3List.vector3[i - step];
+                    Debug.Log("VECTOR: " + vector3);
+                    if (vector3.z == 8)
+                    {
+                        canGoUp = false;
+                        bool undestroyable = cannotDestroy.vector3.Contains(vector3);
+                        if (vector3.x == 1 || undestroyable)
+                        {
+                            canGoLeft = false;
+                        }
+                        else if (vector3.x == 8)
+                        {
+                            canGoRight = false;
+                        }
+                        break;
+                    }
+                    else
+                    {
+                        //Vector3 vector3 = vector3List.vector3[i - step];
+                        vector3List.vector3.Add(new Vector3(vector3.x, vector3.y, vector3.z + step));
+                        canGoDown = true;
+                    }
+                }         
             }
         }
         // TO DOWN
@@ -190,43 +176,39 @@ public class GenerateProceduralLevel : MonoBehaviour
             randomGridCountToMove = UnityEngine.Random.Range(minRandom, maxRandom);
             Debug.Log("Random grid count to move: " + randomGridCountToMove);
             int totalPathGrids = vector3List.vector3.Count;
-            for (int i = totalPathGrids; i < totalPathGrids + randomGridCountToMove; i++)
+            for (int i = totalPathGrids; i <= totalPathGrids + randomGridCountToMove; i++)
             {
-                Vector3 vector3 = vector3List.vector3[i - step];
-                Debug.Log("VECTOR: " + vector3);
-                if (vector3.z == 1)
+                if (i == totalPathGrids + randomGridCountToMove)
                 {
-                    canGoDown = false;
-                    if (vector3.x == 1)
-                    {
-                        canGoLeft = false;
-                    }
-                    else if (vector3.x == 8)
-                    {
-                        canGoRight = false;
-                    }
-                    break;
-                }
-                else
-                {
-                    Debug.Log("CONSTRUCTING");
-                    //Vector3 vector3 = vector3List.vector3[i - step];
-                    vector3List.vector3.Add(new Vector3(vector3.x, vector3.y, vector3.z - step));
-                    canGoUp = true;
-                }
-                /*
-                if (vector3List.vector3[i - step] == null || vector3List.vector3[i - step].z < 1)
-                {
-                    Debug.Log("Deleted grid");
-                    vector3List.vector3.RemoveAt(i - 1);
-                    break;
-                }
-                else
-                {
-                    Debug.Log("CONSTRUCTING");
                     Vector3 vector3 = vector3List.vector3[i - step];
-                    vector3List.vector3.Add(new Vector3(vector3.x, vector3.y, vector3.z - step));
-                }*/
+                    cannotDestroy.vector3.Add(new Vector3(vector3.x, vector3.y, vector3.z - step));
+                    break;
+                }
+                else
+                {
+                    Vector3 vector3 = vector3List.vector3[i - step];
+                    Debug.Log("VECTOR: " + vector3);
+                    bool undestroyable = cannotDestroy.vector3.Contains(vector3);
+                    if (vector3.z == 1 || undestroyable)
+                    {
+                        canGoDown = false;
+                        if (vector3.x == 1)
+                        {
+                            canGoLeft = false;
+                        }
+                        else if (vector3.x == 8)
+                        {
+                            canGoRight = false;
+                        }
+                        break;
+                    }
+                    else
+                    {
+                        //Vector3 vector3 = vector3List.vector3[i - step];
+                        vector3List.vector3.Add(new Vector3(vector3.x, vector3.y, vector3.z - step));
+                        canGoUp = true;
+                    }
+                }
             }
         }
         if (randomDirection == true)
@@ -275,25 +257,6 @@ public class GenerateProceduralLevel : MonoBehaviour
                 {
                     pathDirection = 0;
                 }
-            }
-        }
-        else
-        {
-            if (pathDirection == 0)
-            {
-                pathDirection = 1;
-            }
-            else if (pathDirection == 1)
-            {
-                pathDirection = 0;
-            }
-            else if (pathDirection == 2)
-            {
-                pathDirection = 3;
-            }
-            else if (pathDirection == 3)
-            {
-                pathDirection = 2;
             }
         }
     }
