@@ -7,10 +7,9 @@ public class GenerateProceduralLevel : MonoBehaviour
 {
     public GameObject obstacle, ball;
     public ScriptableVector3List vector3List;
-    public ScriptableVector3List cannotDestroy;
     // Number of random steps of the path that can move forward
     int randomGridCountToMove;
-    int minRandom = 1;
+    int minRandom = 2;
     int maxRandom = 8;
     ////////////////// 
     // For choosing the path direction
@@ -29,45 +28,36 @@ public class GenerateProceduralLevel : MonoBehaviour
         canGoUp = true;
         canGoDown = true;
 
-        randomDirection = true;
         pathDirection = UnityEngine.Random.Range(0, 3);
+        randomDirection = true;
         vector3List.vector3.Clear();
         SpawnBallRandomly();
         // Iteration Count
         for (int i = 0; i < iterationCount; i++)
         {
-            Debug.Log("Iteration " + (i + 1));
             LevelGenerateAlgorithm();
         }
         SpawnObstacles();
     }
     void LevelGenerateAlgorithm()
     {
-        Debug.Log("Can go Left => " + canGoLeft + "\nCan go Right => " + canGoRight + "\nCan go Up => " + canGoUp + "\nCan go Down => " + canGoDown);
-        Debug.Log("Random path direction => " + pathDirection);
         // TO LEFT
         /////////////////////////////////////////////////////////// IN CONSTRUCTION ///////////////////////////////////////////////////////////////
         if (pathDirection == 0 && canGoLeft)
         {
             randomGridCountToMove = UnityEngine.Random.Range(minRandom, maxRandom);
-            Debug.Log("Random grid count to move: " + randomGridCountToMove);
             int totalPathGrids = vector3List.vector3.Count;
             for (int i = totalPathGrids; i <= totalPathGrids + randomGridCountToMove; i++)
             {
                 if (i == totalPathGrids + randomGridCountToMove)
                 {
-                    Vector3 vector3 = vector3List.vector3[i - step];
-                    cannotDestroy.vector3.Add(new Vector3(vector3.x - step, vector3.y, vector3.z));
                     break;
                 }
                 else
                 {
                     Vector3 vector3 = vector3List.vector3[i - step];
-                    Debug.Log("VECTOR: " + vector3);
-                    bool undestroyable = cannotDestroy.vector3.Contains(vector3);
-                    if (vector3.x == 1 || undestroyable)
+                    if (vector3.x == 1)
                     {
-                        canGoLeft = false;
                         if (vector3.z == 1)
                         {
                             canGoDown = false;
@@ -80,7 +70,6 @@ public class GenerateProceduralLevel : MonoBehaviour
                     }
                     else
                     {
-                        //Vector3 vector3 = vector3List.vector3[i - step];
                         vector3List.vector3.Add(new Vector3(vector3.x - step, vector3.y, vector3.z));
                         canGoRight = true;
                     }
@@ -92,24 +81,18 @@ public class GenerateProceduralLevel : MonoBehaviour
         if (pathDirection == 1 && canGoRight)
         {
             randomGridCountToMove = UnityEngine.Random.Range(minRandom, maxRandom);
-            Debug.Log("Random grid count to move: " + randomGridCountToMove);
             int totalPathGrids = vector3List.vector3.Count;
             for (int i = totalPathGrids; i <= totalPathGrids + randomGridCountToMove; i++)
             {
                 if (i == totalPathGrids + randomGridCountToMove)
                 {
-                    Vector3 vector3 = vector3List.vector3[i - step];
-                    cannotDestroy.vector3.Add(new Vector3(vector3.x + step, vector3.y, vector3.z));
                     break;
                 }
                 else
                 {
                     Vector3 vector3 = vector3List.vector3[i - step];
-                    Debug.Log("VECTOR: " + vector3);
-                    bool undestroyable = cannotDestroy.vector3.Contains(vector3);
-                    if (vector3.x == 8 || undestroyable)
+                    if (vector3.x == 8)
                     {
-                        canGoRight = false;
                         if (vector3.z == 1)
                         {
                             canGoDown = false;
@@ -122,7 +105,6 @@ public class GenerateProceduralLevel : MonoBehaviour
                     }
                     else
                     {
-                        //Vector3 vector3 = vector3List.vector3[i - step];
                         vector3List.vector3.Add(new Vector3(vector3.x + step, vector3.y, vector3.z));
                         canGoLeft = true;
                     }
@@ -133,65 +115,18 @@ public class GenerateProceduralLevel : MonoBehaviour
         else if (pathDirection == 2 && canGoUp)
         {
             randomGridCountToMove = UnityEngine.Random.Range(minRandom, maxRandom);
-            Debug.Log("Random grid count to move: " + randomGridCountToMove);
             int totalPathGrids = vector3List.vector3.Count;
             for (int i = totalPathGrids; i <= totalPathGrids + randomGridCountToMove; i++)
             {
                 if (i == totalPathGrids + randomGridCountToMove)
                 {
-                    Vector3 vector3 = vector3List.vector3[i - step];
-                    cannotDestroy.vector3.Add(new Vector3(vector3.x, vector3.y, vector3.z + step));
                     break;
                 }
                 else
                 {
                     Vector3 vector3 = vector3List.vector3[i - step];
-                    Debug.Log("VECTOR: " + vector3);
                     if (vector3.z == 8)
                     {
-                        canGoUp = false;
-                        bool undestroyable = cannotDestroy.vector3.Contains(vector3);
-                        if (vector3.x == 1 || undestroyable)
-                        {
-                            canGoLeft = false;
-                        }
-                        else if (vector3.x == 8)
-                        {
-                            canGoRight = false;
-                        }
-                        break;
-                    }
-                    else
-                    {
-                        //Vector3 vector3 = vector3List.vector3[i - step];
-                        vector3List.vector3.Add(new Vector3(vector3.x, vector3.y, vector3.z + step));
-                        canGoDown = true;
-                    }
-                }         
-            }
-        }
-        // TO DOWN
-        else if (pathDirection == 3 && canGoDown)
-        {
-            randomGridCountToMove = UnityEngine.Random.Range(minRandom, maxRandom);
-            Debug.Log("Random grid count to move: " + randomGridCountToMove);
-            int totalPathGrids = vector3List.vector3.Count;
-            for (int i = totalPathGrids; i <= totalPathGrids + randomGridCountToMove; i++)
-            {
-                if (i == totalPathGrids + randomGridCountToMove)
-                {
-                    Vector3 vector3 = vector3List.vector3[i - step];
-                    cannotDestroy.vector3.Add(new Vector3(vector3.x, vector3.y, vector3.z - step));
-                    break;
-                }
-                else
-                {
-                    Vector3 vector3 = vector3List.vector3[i - step];
-                    Debug.Log("VECTOR: " + vector3);
-                    bool undestroyable = cannotDestroy.vector3.Contains(vector3);
-                    if (vector3.z == 1 || undestroyable)
-                    {
-                        canGoDown = false;
                         if (vector3.x == 1)
                         {
                             canGoLeft = false;
@@ -204,13 +139,47 @@ public class GenerateProceduralLevel : MonoBehaviour
                     }
                     else
                     {
-                        //Vector3 vector3 = vector3List.vector3[i - step];
+                        vector3List.vector3.Add(new Vector3(vector3.x, vector3.y, vector3.z + step));
+                        canGoDown = true;
+                    }
+                }         
+            }
+        }
+        // TO DOWN
+        else if (pathDirection == 3 && canGoDown)
+        {
+            randomGridCountToMove = UnityEngine.Random.Range(minRandom, maxRandom);
+            int totalPathGrids = vector3List.vector3.Count;
+            for (int i = totalPathGrids; i <= totalPathGrids + randomGridCountToMove; i++)
+            {
+                if (i == totalPathGrids + randomGridCountToMove)
+                {
+                    break;
+                }
+                else
+                {
+                    Vector3 vector3 = vector3List.vector3[i - step];
+                    if (vector3.z == 1)
+                    {
+                        if (vector3.x == 1)
+                        {
+                            canGoLeft = false;
+                        }
+                        else if (vector3.x == 8)
+                        {
+                            canGoRight = false;
+                        }
+                        break;
+                    }
+                    else
+                    {
                         vector3List.vector3.Add(new Vector3(vector3.x, vector3.y, vector3.z - step));
                         canGoUp = true;
                     }
                 }
             }
         }
+        // TO check that previous move will not the same with continuous move
         if (randomDirection == true)
         {
             tempValue = UnityEngine.Random.Range(0, 1);
@@ -259,7 +228,28 @@ public class GenerateProceduralLevel : MonoBehaviour
                 }
             }
         }
+        // To check previous move's last grid is on the edge or not. If on the edge it will not allow to go that direction again
+        int count = vector3List.vector3.Count - 1;
+        Vector3 conrolVector3 = vector3List.vector3[count];
+        if (conrolVector3.x == 1)
+        {
+            canGoLeft = false;
+        }
+        if (conrolVector3.x == 8)
+        {
+            canGoRight = false;
+        }
+        if (conrolVector3.z == 1)
+        {
+            canGoDown = false;
+        }
+        if (conrolVector3.z == 8)
+        {
+            canGoUp = false;
+        }
+
     }
+
     void SpawnBallRandomly()
     {
         int x = UnityEngine.Random.Range(minRandom, maxRandom);
